@@ -1,11 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>RPG CAMPAIGN</title>  
+    <title>RPG CAMPAIGN</title>  
 </head>
 <body>
 
+    <style>
+        body{
+        text-align:center;
+        }
+        fieldset{
+        text-align:left
+        }
+        </style>
+        <h1>INVENTORY</h1>
+        <p>CLICK BELOW TO EQUIP</p>
+        <button>EQUIP</button><br><br>
+        
+        <fieldset style="width:28%;display:inline-block"> <legend>Weapons</legend>Weapon 1</fieldset>
+        <fieldset style="width:28%;display:inline-block"> <legend>Armor</legend>Armor 1</fieldset>
+        <fieldset style="width:28%;display:inline-block"> <legend>Consumables</legend>Consumable 1</fieldset>
+        <fieldset>
+        <legend>Miscellaneous</legend>Random shit</fieldset>
 
-  
+<div id="intro">
+<h1>WILLIAM'S RPG</h1>
+<button>BEGIN</button>
+</div>
+
+
+
+<script>
+let STATS = {
+    MAXHP:100,
+    HP:100,
+    LUCK:5,
+    SKILL:5,
+    STRENGTH:5
+}
+let ENEMIES = [];
+function goblinFactory(name, hp, desc, resist, weak, type){
+this.objEnemy = {};
+this.objEnemy.name = name;
+this.objEnemy.hp = hp;
+this.objEnemy.description = desc;
+this.objEnemy.resistance = resist;
+this.objEnemy.weakness = weak;
+this.objEnemy.type = type;
+return this.objEnemy;
+}
+ENEMIES.push(goblinFactory("Goblin", 20, "A stupid, smelly goblin", "none", "magic", "ground"));
+ENEMIES.push()
+ENEMIES.push(goblinFactory("TROLLBOY", 500, "A secret enemy! Drops a plastic fork. Only magic attacks deal damage.",
+ "justWeak", "magic", "ground"));
+
+</script>
+
 </body>
 </html>
