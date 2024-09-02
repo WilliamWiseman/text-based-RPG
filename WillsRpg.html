@@ -40,18 +40,39 @@ let STATS = {
 }
 let ENEMIES = [];
 function goblinFactory(name, hp, desc, resist, weak, type){
-this.objEnemy = {};
-this.objEnemy.name = name;
-this.objEnemy.hp = hp;
-this.objEnemy.description = desc;
-this.objEnemy.resistance = resist;
-this.objEnemy.weakness = weak;
-this.objEnemy.type = type;
+    this.objEnemy = {};
+    this.objEnemy.name = name;
+    his.objEnemy.hp = hp;
+    this.objEnemy.description = desc;
+    this.objEnemy.resistance = resist;
+    this.objEnemy.weakness = weak;
+    this.objEnemy.type = type;
 return this.objEnemy;
 }
+
+let WEAPONS = []
+function WpnFactory(name, dmg, desc, type, move1, move2, move3, move4){
+    this.objWeapon = {};
+    this.objWeapon.name = name;
+    this.objWeapon.BaseDamage = dmg;
+    this.objWeapon.description = desc;
+    this.objWeapon.type = type;
+    this.objWeapon.ATK1 = move1;
+    this.objWeapon.ATK2 = move2;
+    this.objWeapon.ATK3 = move3;
+    this.objWeapon.ATK4 = move4;
+return objWeapon;
+}
+
+
+
+WEAPONS.push(WpnFactory("MagicSword", 1, "A magical sword", "special"))
+
 ENEMIES.push(goblinFactory("Goblin", 20, "A stupid, smelly goblin", "none", "magic", "ground"));
-ENEMIES.push()
-ENEMIES.push(goblinFactory("TROLLBOY", 500, "A secret enemy! Drops a plastic fork. Only magic attacks deal damage.",
+ENEMIES.push(goblinFactory("AirGoblin", 10, "This small goblin flies with its tiny wings,",
+ "none", "magic", "air"))
+ENEMIES.push(goblinFactory("TROLLBOY", 500,
+ "A secret enemy! Drops a plastic fork. Only magic attacks deal damage.",
  "justWeak", "magic", "ground"));
 
 </script>
