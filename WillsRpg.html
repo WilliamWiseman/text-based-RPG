@@ -12,31 +12,45 @@
         fieldset{
         text-align:left
         }
-        </style>
-        <h1>INVENTORY</h1>
-        <p>CLICK BELOW TO EQUIP</p>
-        <button>EQUIP</button><br><br>
-        
-        <fieldset style="width:28%;display:inline-block"> <legend>Weapons</legend>Weapon 1</fieldset>
-        <fieldset style="width:28%;display:inline-block"> <legend>Armor</legend>Armor 1</fieldset>
-        <fieldset style="width:28%;display:inline-block"> <legend>Consumables</legend>Consumable 1</fieldset>
-        <fieldset>
-        <legend>Miscellaneous</legend>Random shit</fieldset>
+    </style>
 
 <div id="intro">
-<h1>WILLIAM'S RPG</h1>
-<button>BEGIN</button>
+<h1>welcome! this is far from finished, so it's just fights now</h1>
+<button onclick="gearOpen()">pick gear</button>
+</div>
+
+<div id="gearScreen" style="display:none">
+<p>Yay you got to the gearscreen</p>
+</div>
+
+<div id="invScreen" style="display:none">
+    <h1>INVENTORY</h1>
+    <p>CLICK BELOW TO EQUIP</p>
+    <button>EQUIP</button><br><br>
+    <fieldset style="width:28%;display:inline-block"> <legend>Weapons</legend>Weapon 1</fieldset>
+    <fieldset style="width:28%;display:inline-block"> <legend>Armor</legend>Armor 1</fieldset>
+    <fieldset style="width:28%;display:inline-block"> <legend>Consumables</legend>Consumable 1</fieldset>
+    <fieldset>
+    <legend>Miscellaneous</legend>Random shit</fieldset>
 </div>
 
 
-
 <script>
+//HTML FUNCTIONS
+function gearOpen(){
+gear.style.display="block";
+document.getElementById('intro').style.display = "none";
+}
+
+
+//HTML FUNCTIONS END
 let STATS = {
     MAXHP:100,
     HP:100,
     LUCK:5,
     SKILL:5,
-    STRENGTH:5
+    STRENGTH:5,
+    gold:0
 }
 let ENEMIES = [];
 function goblinFactory(name, hp, desc, resist, weak, type){
@@ -49,6 +63,7 @@ function goblinFactory(name, hp, desc, resist, weak, type){
     this.objEnemy.type = type;
 return this.objEnemy;
 }
+const gear = document.getElementById('gearScreen');
 
 let WEAPONS = []
 function WpnFactory(name, dmg, desc, type, move1, move2, move3, move4){
@@ -61,20 +76,51 @@ function WpnFactory(name, dmg, desc, type, move1, move2, move3, move4){
     this.objWeapon.ATK2 = move2;
     this.objWeapon.ATK3 = move3;
     this.objWeapon.ATK4 = move4;
+    this.objWeapon.haveIt = false;
 return this.objWeapon;
 }
 
+function ATKfactory(name, dmg, desc, type){
+    this.objAttack = {};
+    this.objAttack.name = name;
+    this.objAttack.damage = dmg;
+    this.objAttack.description = desc;
+    this.objAttack.type = type;
+return this.objAttack;
+}
+let none = null;
+//These are for attack types
+let meleeCut = {
+    dmgType:"cut",
+    range:"melee"
+}
+let meleeMagic = {
+    dmgType:"magic",
+    range:"melee"
+}
+let rangeMagic = {
+    dmgType:"magic",
+    range:"range"
+}
 
+//end of atk types
 
-WEAPONS.push(WpnFactory("MagicSword", 1, "A magical sword", "special"))
+let Slash = ATKfactory("Slash", 5, "Just swinging smth sharp", meleeCut);
+let FireSlash = ATKfactory("FireSlash", 10, "A fiery slash. Magic", MeleeMagic);
+let FireBall = ATKfactory("Fireball", 10, "A fiery projectile", rangeMagic);
 
-ENEMIES.push(goblinFactory("Goblin", 20, "A stupid, smelly goblin", "none", "magic", "ground"));
-ENEMIES.push(goblinFactory("AirGoblin", 10, "This small goblin flies with its tiny wings,",
- "none", "magic", "air"))
+WEAPONS.push(WpnFactory("MagicSword", 2, "A magical sword", "special", Slash, FireSlash, FireBall, none))
+WEAPONS.push(WpnFactory("DumbSword", 0, "sword.", "melee", Slash, none, none, none))
+
+ENEMIES.push(goblinFactory("Goblin", 40, "A stupid, smelly goblin", "none", "magic", "ground"));
+    //enemies 0
+ENEMIES.push(goblinFactory("AirGoblin", 20, "This small goblin flies with its tiny wings,",
+ "none", "magic", "air"));
+    //enemies 1
 ENEMIES.push(goblinFactory("TROLLBOY", 500,
  "A secret enemy! Drops a plastic fork. Only magic attacks deal damage.",
  "justWeak", "magic", "ground"));
-
+    //enemies 2
 </script>
 
 </body>
