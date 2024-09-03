@@ -170,15 +170,23 @@ fight.style.display="block";
 document.getElementById('intro').style.display = "none";
 }
 function nofziger(){
-document.getElementById('mainOPTIONS').style.display="none";
-document.getElementById("atkOPTIONS").style.display="block";
+docel('mainOPTIONS').style.display="none";
+docel("atkOPTIONS").style.display="block";
 initialBattleHTML();
 }
 function initialBattleHtml(){
-document.getElementById('prim').innerHTML = primary.name;
-document.getElementById('sec').innerHTML = secondary.name;
-
+docel('prim').innerHTML = primary.name;
+docel('sec').innerHTML = secondary.name;
 }
+function docel(id){
+let foo = document.getElementById(id);
+if(!foo){
+alert("ERROR:" + id + " not found");
+return;
+}
+return foo;
+}
+
 //END OF BATTLE HTML FUNCTIONS
 
 
