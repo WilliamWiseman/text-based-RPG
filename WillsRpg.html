@@ -49,7 +49,7 @@
         <div id="mainOPTIONS"></div>
         <fieldset style="width:620px"><legend>Actions</legend>
         <button style="width: 203px; height: 100px;" 
-        onclick="nofziger(battle1, battle2)">FIGHT</button>
+        onclick="nofziger()">FIGHT</button>
         <button style="width: 203px; height: 100px;">ITEMS</button>
         <button style="width: 203px; height: 100px;">OTHER</button>
         </fieldset>
@@ -163,15 +163,13 @@ const FIGHT = document.getElementById('fightScreen');
 //END OF BATTLE OBJECTS
 
 //BATTLE HTML FUNCTIONS
-let battle1 = document.getElementById('mainOPTIONS');
-let battle2 = document.getElementById("atkOPTIONS");
 function fightOpen(){
 fight.style.display="block";
 document.getElementById('intro').style.display = "none";
 }
-function nofziger(close, open){
-close.style.display="none";
-open.style.display="block";
+function nofziger(){
+document.getElementById('mainOPTIONS').style.display="none";
+document.getElementById("atkOPTIONS").style.display="block";
 }
 //END OF BATTLE HTML FUNCTIONS
 
