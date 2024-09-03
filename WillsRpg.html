@@ -56,7 +56,8 @@
     </div>
     <div id="atkOPTIONS" style="display:none">
         <fieldset style="width:620px"><legend>Actions</legend>
-            <button style="width: 203px; height: 100px;">ATTACK</button>
+            <button style="width: 203px; height: 100px;" id="prim">PRIMARY</button>
+            <button style="width: 203px; height: 100px;" id="sec">SECONDARY</button>
             <button style="width: 203px; height: 100px;">BACK</button>
         </fieldset>
     </div>
@@ -158,7 +159,8 @@ let enemyMaxHp = enemy.MaxHp;
 let enemyHp = enemy.hp;
 const ENEMYHP = document.getElementById('enemyHpBar');
 const FIGHT = document.getElementById('fightScreen');
-
+let primary = WEAPONS[0];
+let secondary = WEAPONS[2];
 
 //END OF BATTLE OBJECTS
 
@@ -170,11 +172,18 @@ document.getElementById('intro').style.display = "none";
 function nofziger(){
 document.getElementById('mainOPTIONS').style.display="none";
 document.getElementById("atkOPTIONS").style.display="block";
+initialBattleHTML();
+}
+function initialBattleHtml(){
+document.getElementById('prim').innerHTML = primary.name;
+document.getElementById('sec').innerHTML = secondary.name;
+
 }
 //END OF BATTLE HTML FUNCTIONS
 
 
 //BATTLE FUNCTIONS
+
 
 //END OF BATTLE FUNCTIONS
 
