@@ -34,6 +34,24 @@
     <legend>Miscellaneous</legend>Random shit</fieldset>
 </div>
 
+<div id="fightScreen" style="display:none">
+    <div style="text-align:left">
+        <button>ENEMY INFO</button><p>Goblin</p>
+        <progress id="enemyHpBar" value="40" max="40" style="background-color:green"></progress>
+        <p>HP 40/40</p>
+        </div>
+        <br><br><br><br><br><br><br><br><br>
+        <div style="text-align:right">
+        <p>YOURNAME</p>
+        <progress id="HPBAR" value="100" max="100" style="background-color:green"></progress>
+        <p>HP: 100/100</p>
+        </div>
+        <fieldset style="width:620px"><legend>Actions</legend>
+        <button style="width: 203px; height: 100px;">FIGHT</button>
+        <button style="width: 203px; height: 100px;">ITEMS</button>
+        <button style="width: 203px; height: 100px;">OTHER</button>
+        </fieldset>
+</div>
 
 <script>
 //HTML FUNCTIONS
@@ -53,7 +71,7 @@ let STATS = {
     gold:0
 }
 let ENEMIES = [];
-function goblinFactory(name, hp, desc, resist, weak, type){
+function goblinFactory(name, hp, desc, resist, weak, type, atk){
     this.objEnemy = {};
     this.objEnemy.name = name;
     his.objEnemy.hp = hp;
@@ -61,6 +79,7 @@ function goblinFactory(name, hp, desc, resist, weak, type){
     this.objEnemy.resistance = resist;
     this.objEnemy.weakness = weak;
     this.objEnemy.type = type;
+    this.objEnemy.atk1 = atk;
 return this.objEnemy;
 }
 const gear = document.getElementById('gearScreen');
@@ -102,24 +121,24 @@ let rangeMagic = {
     dmgType:"magic",
     range:"range"
 }
-
 //end of atk types
 
 let Slash = ATKfactory("Slash", 5, "Just swinging smth sharp", meleeCut);
 let FireSlash = ATKfactory("FireSlash", 10, "A fiery slash. Magic", MeleeMagic);
 let FireBall = ATKfactory("Fireball", 10, "A fiery projectile", rangeMagic);
+let MonsterAtk = ATKfactory("attack", 1, "description", meleeCut);
 
-WEAPONS.push(WpnFactory("MagicSword", 2, "A magical sword", "special", Slash, FireSlash, FireBall, none))
-WEAPONS.push(WpnFactory("DumbSword", 0, "sword.", "melee", Slash, none, none, none))
+WEAPONS.push(WpnFactory("MagicSword", 2, "A magical sword", "special", Slash, FireSlash, FireBall, none));
+WEAPONS.push(WpnFactory("DumbSword", 0, "sword.", "melee", Slash, none, none, none));
 
-ENEMIES.push(goblinFactory("Goblin", 40, "A stupid, smelly goblin", "none", "magic", "ground"));
+ENEMIES.push(goblinFactory("Goblin", 40, "A stupid, smelly goblin", "none", "magic", "ground", MonsterAtk));
     //enemies 0
 ENEMIES.push(goblinFactory("AirGoblin", 20, "This small goblin flies with its tiny wings,",
- "none", "magic", "air"));
+ "none", "magic", "air", MonsterAtk));
     //enemies 1
 ENEMIES.push(goblinFactory("TROLLBOY", 500,
  "A secret enemy! Drops a plastic fork. Only magic attacks deal damage.",
- "justWeak", "magic", "ground"));
+ "justWeak", "magic", "ground", MonsterAtk));
     //enemies 2
 </script>
 
