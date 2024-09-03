@@ -16,7 +16,7 @@
 
 <div id="intro">
 <h1>welcome! this is far from finished, so it's just fights now</h1>
-<button onclick="gearOpen()">pick gear</button>
+<button onclick="fightOpen()">Begin Fight</button>
 </div>
 
 <div id="gearScreen" style="display:none">
@@ -55,10 +55,7 @@
 
 <script>
 //HTML FUNCTIONS
-function gearOpen(){
-gear.style.display="block";
-document.getElementById('intro').style.display = "none";
-}
+
 
 
 //HTML FUNCTIONS END
@@ -74,7 +71,8 @@ let ENEMIES = [];
 function goblinFactory(name, hp, desc, resist, weak, type, atk){
     this.objEnemy = {};
     this.objEnemy.name = name;
-    his.objEnemy.hp = hp;
+    this.objEnemy.MaxHp = hp;
+    this.objEnemy.hp = hp;
     this.objEnemy.description = desc;
     this.objEnemy.resistance = resist;
     this.objEnemy.weakness = weak;
@@ -82,7 +80,7 @@ function goblinFactory(name, hp, desc, resist, weak, type, atk){
     this.objEnemy.atk1 = atk;
 return this.objEnemy;
 }
-const gear = document.getElementById('gearScreen');
+const fight = document.getElementById('fightScreen');
 
 let WEAPONS = []
 function WpnFactory(name, dmg, desc, type, move1, move2, move3, move4){
@@ -140,6 +138,32 @@ ENEMIES.push(goblinFactory("TROLLBOY", 500,
  "A secret enemy! Drops a plastic fork. Only magic attacks deal damage.",
  "justWeak", "magic", "ground", MonsterAtk));
     //enemies 2
+
+
+//BATTLE OBJECTS
+let enemy = ENEMIES[0];
+let enemyName = enemy.name;
+let enemyMaxHp = enemy.MaxHp;
+let enemyHp = enemy.hp;
+const ENEMYHP = document.getElementById('enemyHpBar');
+const FIGHT = document.getElementById('fightScreen');
+
+
+//END OF BATTLE OBJECTS
+
+//BATTLE HTML FUNCTIONS
+function fightOpen(){
+fight.style.display="block";
+document.getElementById('intro').style.display = "none";
+}
+
+//END OF BATTLE HTML FUNCTIONS
+
+
+//BATTLE FUNCTIONS
+
+//END OF BATTLE FUNCTIONS
+
 </script>
 
 </body>
