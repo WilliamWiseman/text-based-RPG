@@ -46,11 +46,20 @@
         <progress id="HPBAR" value="100" max="100" style="background-color:green"></progress>
         <p>HP: 100/100</p>
         </div>
+        <div id="mainOPTIONS"></div>
         <fieldset style="width:620px"><legend>Actions</legend>
-        <button style="width: 203px; height: 100px;">FIGHT</button>
+        <button style="width: 203px; height: 100px;" 
+        onclick="nofziger(battle1, battle2)">FIGHT</button>
         <button style="width: 203px; height: 100px;">ITEMS</button>
         <button style="width: 203px; height: 100px;">OTHER</button>
         </fieldset>
+    </div>
+    <div id="atkOPTIONS" style="display:none">
+        <fieldset style="width:620px"><legend>Actions</legend>
+            <button style="width: 203px; height: 100px;">ATTACK</button>
+            <button style="width: 203px; height: 100px;">BACK</button>
+        </fieldset>
+    </div>
 </div>
 
 <script>
@@ -125,9 +134,11 @@ let Slash = ATKfactory("Slash", 5, "Just swinging smth sharp", meleeCut);
 let FireSlash = ATKfactory("FireSlash", 10, "A fiery slash. Magic", MeleeMagic);
 let FireBall = ATKfactory("Fireball", 10, "A fiery projectile", rangeMagic);
 let MonsterAtk = ATKfactory("attack", 1, "description", meleeCut);
+let ATK = ATKfactory("attack", 1, "an attack", meleeCut);
 
 WEAPONS.push(WpnFactory("MagicSword", 2, "A magical sword", "special", Slash, FireSlash, FireBall, none));
 WEAPONS.push(WpnFactory("DumbSword", 0, "sword.", "melee", Slash, none, none, none));
+WEAPONS.push(WpnFactory("Kalli's Crossbow", 1, "A crossbow that used to be Kalli's.", "ranged", ATK, none, none, none))
 
 ENEMIES.push(goblinFactory("Goblin", 40, "A stupid, smelly goblin", "none", "magic", "ground", MonsterAtk));
     //enemies 0
@@ -152,11 +163,16 @@ const FIGHT = document.getElementById('fightScreen');
 //END OF BATTLE OBJECTS
 
 //BATTLE HTML FUNCTIONS
+let battle1 = document.getElementById('mainOPTIONS');
+let battle2 = document.getElementById("atkOPTIONS");
 function fightOpen(){
 fight.style.display="block";
 document.getElementById('intro').style.display = "none";
 }
-
+function nofziger(close, open){
+close.style.display="none";
+open.style.display="block";
+}
 //END OF BATTLE HTML FUNCTIONS
 
 
