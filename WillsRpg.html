@@ -159,8 +159,7 @@ let enemyMaxHp = enemy.MaxHp;
 let enemyHp = enemy.hp;
 const ENEMYHP = document.getElementById('enemyHpBar');
 const FIGHT = document.getElementById('fightScreen');
-let primary = WEAPONS[0];
-let secondary = WEAPONS[2];
+
 
 //END OF BATTLE OBJECTS
 
@@ -175,8 +174,8 @@ docel("atkOPTIONS").style.display="block";
 initialBattleHTML();
 }
 function initialBattleHtml(){
-docel('prim').innerHTML = primary.name;
-docel('sec').innerHTML = secondary.name;
+docel('prim').innerHTML = WEAPONS[0].name;
+docel('sec').innerHTML = WEAPONS[2].name;
 }
 function docel(id){
 let foo = document.getElementById(id);
