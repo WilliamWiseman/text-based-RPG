@@ -1,200 +1,282 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>RPG CAMPAIGN</title>  
-</head>
-<body>
-
+  <head>
+    <title>RPG CAMPAIGN</title>
+  </head>
+  <body>
     <style>
-        body{
-        text-align:center;
-        }
-        fieldset{
-        text-align:left
-        }
+      body {
+        text-align: center;
+      }
+      fieldset {
+        text-align: left;
+      }
     </style>
 
-<div id="intro">
-<h1>welcome! this is far from finished, so it's just fights now</h1>
-<button onclick="fightOpen()">Begin Fight</button>
-</div>
+    <div id="intro">
+      <h1>welcome! this is far from finished, so it's just fights now</h1>
+      <button onclick="fightOpen()">Begin Fight</button>
+    </div>
 
-<div id="gearScreen" style="display:none">
-<p>Yay you got to the gearscreen</p>
-</div>
+    <div id="gearScreen" style="display: none">
+      <p>Yay you got to the gearscreen</p>
+    </div>
 
-<div id="invScreen" style="display:none">
-    <h1>INVENTORY</h1>
-    <p>CLICK BELOW TO EQUIP</p>
-    <button>EQUIP</button><br><br>
-    <fieldset style="width:28%;display:inline-block"> <legend>Weapons</legend>Weapon 1</fieldset>
-    <fieldset style="width:28%;display:inline-block"> <legend>Armor</legend>Armor 1</fieldset>
-    <fieldset style="width:28%;display:inline-block"> <legend>Consumables</legend>Consumable 1</fieldset>
-    <fieldset>
-    <legend>Miscellaneous</legend>Random shit</fieldset>
-</div>
+    <div id="invScreen" style="display: none">
+      <h1>INVENTORY</h1>
+      <p>CLICK BELOW TO EQUIP</p>
+      <button>EQUIP</button><br /><br />
+      <fieldset style="width: 28%; display: inline-block">
+        <legend>Weapons</legend>
+        Weapon 1
+      </fieldset>
+      <fieldset style="width: 28%; display: inline-block">
+        <legend>Armor</legend>
+        Armor 1
+      </fieldset>
+      <fieldset style="width: 28%; display: inline-block">
+        <legend>Consumables</legend>
+        Consumable 1
+      </fieldset>
+      <fieldset>
+        <legend>Miscellaneous</legend>
+        Random shit
+      </fieldset>
+    </div>
 
-<div id="fightScreen" style="display:none">
-    <div style="text-align:left">
-        <button>ENEMY INFO</button><p>Goblin</p>
-        <progress id="enemyHpBar" value="40" max="40" style="background-color:green"></progress>
+    <div id="fightScreen" style="display: none">
+      <div style="text-align: left">
+        <button>ENEMY INFO</button>
+        <p>Goblin</p>
+        <progress
+          id="enemyHpBar"
+          value="40"
+          max="40"
+          style="background-color: green"
+        ></progress>
         <p>HP 40/40</p>
-        </div>
-        <br><br><br><br><br><br><br><br><br>
-        <div style="text-align:right">
+      </div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <div style="text-align: right">
         <p>YOURNAME</p>
-        <progress id="HPBAR" value="100" max="100" style="background-color:green"></progress>
+        <progress
+          id="HPBAR"
+          value="100"
+          max="100"
+          style="background-color: green"
+        ></progress>
         <p>HP: 100/100</p>
-        </div>
-        <div id="mainOPTIONS">
-        <fieldset style="width:620px"><legend>Actions</legend>
-        <button style="width: 203px; height: 100px;" 
-        onclick="nofziger()">FIGHT</button>
-        <button style="width: 203px; height: 100px;">ITEMS</button>
-        <button style="width: 203px; height: 100px;">OTHER</button>
+      </div>
+      <div id="mainOPTIONS">
+        <fieldset style="width: 620px">
+          <legend>Actions</legend>
+          <button style="width: 203px; height: 100px" onclick="nofziger()">
+            FIGHT
+          </button>
+          <button style="width: 203px; height: 100px">ITEMS</button>
+          <button style="width: 203px; height: 100px">OTHER</button>
         </fieldset>
-    </div>
-    <div id="atkOPTIONS" style="display:none">
-        <fieldset style="width:620px"><legend>Actions</legend>
-            <button style="width: 203px; height: 100px;" id="prim">PRIMARY</button>
-            <button style="width: 203px; height: 100px;" id="sec">SECONDARY</button>
-            <button style="width: 203px; height: 100px;">BACK</button>
+      </div>
+      <div id="atkOPTIONS" style="display: none">
+        <fieldset style="width: 620px">
+          <legend>Actions</legend>
+          <button style="width: 203px; height: 100px" id="prim">PRIMARY</button>
+          <button style="width: 203px; height: 100px" id="sec">
+            SECONDARY
+          </button>
+          <button style="width: 203px; height: 100px">BACK</button>
         </fieldset>
+      </div>
     </div>
-</div>
 
-<script>
-//HTML FUNCTIONS
+    <script>
+      //HTML FUNCTIONS
 
+      //HTML FUNCTIONS END
+      let STATS = {
+        MAXHP: 100,
+        HP: 100,
+        LUCK: 5,
+        SKILL: 5,
+        STRENGTH: 5,
+        gold: 0,
+      };
+      let ENEMIES = [];
+      function goblinFactory(name, hp, desc, resist, weak, type, atk) {
+        this.objEnemy = {};
+        this.objEnemy.name = name;
+        this.objEnemy.MaxHp = hp;
+        this.objEnemy.hp = hp;
+        this.objEnemy.description = desc;
+        this.objEnemy.resistance = resist;
+        this.objEnemy.weakness = weak;
+        this.objEnemy.type = type;
+        this.objEnemy.atk1 = atk;
+        return this.objEnemy;
+      }
+      const fight = document.getElementById("fightScreen");
 
+      let WEAPONS = [];
+      function WpnFactory(name, dmg, desc, type, move1, move2, move3, move4) {
+        this.objWeapon = {};
+        this.objWeapon.name = name;
+        this.objWeapon.BaseDamage = dmg;
+        this.objWeapon.description = desc;
+        this.objWeapon.type = type;
+        this.objWeapon.ATK1 = move1;
+        this.objWeapon.ATK2 = move2;
+        this.objWeapon.ATK3 = move3;
+        this.objWeapon.ATK4 = move4;
+        this.objWeapon.haveIt = false;
+        return this.objWeapon;
+      }
 
-//HTML FUNCTIONS END
-let STATS = {
-    MAXHP:100,
-    HP:100,
-    LUCK:5,
-    SKILL:5,
-    STRENGTH:5,
-    gold:0
-}
-let ENEMIES = [];
-function goblinFactory(name, hp, desc, resist, weak, type, atk){
-    this.objEnemy = {};
-    this.objEnemy.name = name;
-    this.objEnemy.MaxHp = hp;
-    this.objEnemy.hp = hp;
-    this.objEnemy.description = desc;
-    this.objEnemy.resistance = resist;
-    this.objEnemy.weakness = weak;
-    this.objEnemy.type = type;
-    this.objEnemy.atk1 = atk;
-return this.objEnemy;
-}
-const fight = document.getElementById('fightScreen');
+      function ATKfactory(name, dmg, desc, type) {
+        this.objAttack = {};
+        this.objAttack.name = name;
+        this.objAttack.damage = dmg;
+        this.objAttack.description = desc;
+        this.objAttack.type = type;
+        return this.objAttack;
+      }
+      let none = null;
+      //These are for attack types
+      let meleeCut = {
+        dmgType: "cut",
+        range: "melee",
+      };
+      let meleeMagic = {
+        dmgType: "magic",
+        range: "melee",
+      };
+      let rangeMagic = {
+        dmgType: "magic",
+        range: "range",
+      };
+      //end of atk types
 
-let WEAPONS = []
-function WpnFactory(name, dmg, desc, type, move1, move2, move3, move4){
-    this.objWeapon = {};
-    this.objWeapon.name = name;
-    this.objWeapon.BaseDamage = dmg;
-    this.objWeapon.description = desc;
-    this.objWeapon.type = type;
-    this.objWeapon.ATK1 = move1;
-    this.objWeapon.ATK2 = move2;
-    this.objWeapon.ATK3 = move3;
-    this.objWeapon.ATK4 = move4;
-    this.objWeapon.haveIt = false;
-return this.objWeapon;
-}
+      let Slash = ATKfactory("Slash", 5, "Just swinging smth sharp", meleeCut);
+      let FireSlash = ATKfactory(
+        "FireSlash",
+        10,
+        "A fiery slash. Magic",
+        meleeMagic
+      );
+      let FireBall = ATKfactory(
+        "Fireball",
+        10,
+        "A fiery projectile",
+        rangeMagic
+      );
+      let MonsterAtk = ATKfactory("attack", 1, "description", meleeCut);
+      let ATK = ATKfactory("attack", 1, "an attack", meleeCut);
 
-function ATKfactory(name, dmg, desc, type){
-    this.objAttack = {};
-    this.objAttack.name = name;
-    this.objAttack.damage = dmg;
-    this.objAttack.description = desc;
-    this.objAttack.type = type;
-return this.objAttack;
-}
-let none = null;
-//These are for attack types
-let meleeCut = {
-    dmgType:"cut",
-    range:"melee"
-}
-let meleeMagic = {
-    dmgType:"magic",
-    range:"melee"
-}
-let rangeMagic = {
-    dmgType:"magic",
-    range:"range"
-}
-//end of atk types
+      WEAPONS.push(
+        WpnFactory(
+          "MagicSword",
+          2,
+          "A magical sword",
+          "special",
+          Slash,
+          FireSlash,
+          FireBall,
+          none
+        )
+      );
+      WEAPONS.push(
+        WpnFactory("DumbSword", 0, "sword.", "melee", Slash, none, none, none)
+      );
+      WEAPONS.push(
+        WpnFactory(
+          "Kalli's Crossbow",
+          1,
+          "A crossbow that used to be Kalli's.",
+          "ranged",
+          ATK,
+          none,
+          none,
+          none
+        )
+      );
 
-let Slash = ATKfactory("Slash", 5, "Just swinging smth sharp", meleeCut);
-let FireSlash = ATKfactory("FireSlash", 10, "A fiery slash. Magic", MeleeMagic);
-let FireBall = ATKfactory("Fireball", 10, "A fiery projectile", rangeMagic);
-let MonsterAtk = ATKfactory("attack", 1, "description", meleeCut);
-let ATK = ATKfactory("attack", 1, "an attack", meleeCut);
+      ENEMIES.push(
+        goblinFactory(
+          "Goblin",
+          40,
+          "A stupid, smelly goblin",
+          "none",
+          "magic",
+          "ground",
+          MonsterAtk
+        )
+      );
+      //enemies 0
+      ENEMIES.push(
+        goblinFactory(
+          "AirGoblin",
+          20,
+          "This small goblin flies with its tiny wings,",
+          "none",
+          "magic",
+          "air",
+          MonsterAtk
+        )
+      );
+      //enemies 1
+      ENEMIES.push(
+        goblinFactory(
+          "TROLLBOY",
+          500,
+          "A secret enemy! Drops a plastic fork. Only magic attacks deal damage.",
+          "justWeak",
+          "magic",
+          "ground",
+          MonsterAtk
+        )
+      );
+      //enemies 2
 
-WEAPONS.push(WpnFactory("MagicSword", 2, "A magical sword", "special", Slash, FireSlash, FireBall, none));
-WEAPONS.push(WpnFactory("DumbSword", 0, "sword.", "melee", Slash, none, none, none));
-WEAPONS.push(WpnFactory("Kalli's Crossbow", 1, "A crossbow that used to be Kalli's.", "ranged", ATK, none, none, none))
+      //BATTLE OBJECTS
+      let enemy = ENEMIES[0];
+      let enemyName = enemy.name;
+      let enemyMaxHp = enemy.MaxHp;
+      let enemyHp = enemy.hp;
+      const ENEMYHP = document.getElementById("enemyHpBar");
+      const FIGHT = document.getElementById("fightScreen");
 
-ENEMIES.push(goblinFactory("Goblin", 40, "A stupid, smelly goblin", "none", "magic", "ground", MonsterAtk));
-    //enemies 0
-ENEMIES.push(goblinFactory("AirGoblin", 20, "This small goblin flies with its tiny wings,",
- "none", "magic", "air", MonsterAtk));
-    //enemies 1
-ENEMIES.push(goblinFactory("TROLLBOY", 500,
- "A secret enemy! Drops a plastic fork. Only magic attacks deal damage.",
- "justWeak", "magic", "ground", MonsterAtk));
-    //enemies 2
+      //END OF BATTLE OBJECTS
 
+      //BATTLE HTML FUNCTIONS
+      function fightOpen() {
+        fight.style.display = "block";
+        document.getElementById("intro").style.display = "none";
+      }
 
-//BATTLE OBJECTS
-let enemy = ENEMIES[0];
-let enemyName = enemy.name;
-let enemyMaxHp = enemy.MaxHp;
-let enemyHp = enemy.hp;
-const ENEMYHP = document.getElementById('enemyHpBar');
-const FIGHT = document.getElementById('fightScreen');
+      function initialBattleHtml() {
+        docel("prim").innerHTML = WEAPONS[0].name;
+        docel("sec").innerHTML = WEAPONS[2].name;
+      }
+      
+      function nofziger() {
+        docel("mainOPTIONS").style.display = "none";
+        docel("atkOPTIONS").style.display = "block";
+        initialBattleHtml();
+      }
+      
+      function docel(id) {
+        let foo = document.getElementById(id);
+        if (!foo) {
+          alert("ERROR:" + id + " not found");
+          return;
+        }
+        return foo;
+      }
 
+      //END OF BATTLE HTML FUNCTIONS
 
-//END OF BATTLE OBJECTS
+      //BATTLE FUNCTIONS
 
-//BATTLE HTML FUNCTIONS
-function fightOpen(){
-fight.style.display="block";
-document.getElementById('intro').style.display = "none";
-}
-function nofziger(){
-docel('mainOPTIONS').style.display="none";
-docel("atkOPTIONS").style.display="block";
-initialBattleHTML();
-}
-function initialBattleHtml(){
-docel('prim').innerHTML = WEAPONS[0].name;
-docel('sec').innerHTML = WEAPONS[2].name;
-}
-function docel(id){
-let foo = document.getElementById(id);
-if(!foo){
-alert("ERROR:" + id + " not found");
-return;
-}
-return foo;
-}
-
-//END OF BATTLE HTML FUNCTIONS
-
-
-//BATTLE FUNCTIONS
-
-
-//END OF BATTLE FUNCTIONS
-
-</script>
-
-</body>
+      //END OF BATTLE FUNCTIONS
+    </script>
+  </body>
 </html>
