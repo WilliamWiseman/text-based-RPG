@@ -1,6 +1,7 @@
 # text-based-RPG
 This is a big project. It's an entire rpg in one file.
-Coded by William Wiseman and Collaborators. 
+Coded by William Wiseman and Collaborators.
+
 (Bug fixes and white space)
 
 
