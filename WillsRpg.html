@@ -87,6 +87,16 @@
           <button style="width: 203px; height: 100px">BACK</button>
         </fieldset>
       </div>
+      <div id="atkOPTIONS2" style="display: none">
+      <fieldset style="width: 620px">
+        <legend>Actions</legend>
+        <button style="width: 307px; height: 50px">ATK1</button>
+        <button style="width: 307px; height: 50px">ATK2
+        </button>
+        <button style="width: 307px; height: 50px">ATK3</button>
+        </button>
+        <button style="width: 307px; height: 50px">ATK4</button>
+      </fieldset>
     </div>
 
     <script>
@@ -139,7 +149,7 @@
         this.objAttack.type = type;
         return this.objAttack;
       }
-      let none = null;
+      let none = ATKfactory("None", 0, "empty attack slot", meleeCut)
       //These are for attack types
       let meleeCut = {
         dmgType: "cut",
@@ -271,7 +281,10 @@
         }
         return foo;
       }
-
+      
+      function progress(){
+      docel("atkOPTIONS2").style.display = "block";
+      }
       //END OF BATTLE HTML FUNCTIONS
 
       //BATTLE FUNCTIONS
