@@ -68,7 +68,7 @@
         <p>HP: 100/100</p>
       </div>
       <div id="mainOPTIONS">
-        <fieldset style="width: 620px">
+        <fieldset style="width: 620px; height:122px">
           <legend>Actions</legend>
           <button style="width: 203px; height: 100px" onclick="nofziger()">
             FIGHT
@@ -78,22 +78,22 @@
         </fieldset>
       </div>
       <div id="atkOPTIONS" style="display: none">
-        <fieldset style="width: 620px">
+        <fieldset style="width: 620px; height:122px">
           <legend>Weapons</legend>
-          <button style="width: 203px; height: 100px" id="prim">PRIMARY</button>
-          <button style="width: 203px; height: 100px" id="sec">
+          <button style="width: 203px; height: 100px" id="prim" onclick="wpn1()">PRIMARY</button>
+          <button style="width: 203px; height: 100px" id="sec" onclick="wpn2()">
             SECONDARY
           </button>
           <button style="width: 203px; height: 100px">BACK</button>
         </fieldset>
       </div>
       <div id="atkOPTIONS2" style="display: none">
-        <fieldset style="width: 620px">
+        <fieldset style="width: 620px; height:122px">
           <legend>Moves</legend>
-          <button style="width: 203px; height: 50px">ATK1</button>
-          <button style="width: 203px; height: 50px">ATK2</button>
-          <button style="width: 203px; height: 50px">ATK3</button>
-          <button style="width: 203px; height: 50px">ATK4</button>
+          <button style="width: 308px; height: 50px" id="op1">ATK1</button>
+          <button style="width: 308px; height: 50px" id="op2">ATK2</button>
+          <button style="width: 308px; height: 50px" id="op3">ATK3</button>
+          <button style="width: 308px; height: 50px" id="op4">ATK4</button>
         </fieldset>
       </div>
     </div>
@@ -148,7 +148,6 @@
         this.objAttack.type = type;
         return this.objAttack;
       }
-      let none = null;
       //These are for attack types
       let meleeCut = {
         dmgType: "cut",
@@ -177,6 +176,7 @@
         "A fiery projectile",
         rangeMagic
       );
+      let none = ATKfactory("NONE", 0, "Empty attack slot", meleeCut);
       let MonsterAtk = ATKfactory("attack", 1, "description", meleeCut);
       let ATK = ATKfactory("attack", 1, "an attack", meleeCut);
 
@@ -284,7 +284,22 @@
       //END OF BATTLE HTML FUNCTIONS
 
       //BATTLE FUNCTIONS
-
+      function wpn1(){
+      docel('atkOPTIONS').style.display = "none";
+      docel('atkOPTIONS2').style.display = "block";
+      docel('op1').innerHTML = WEAPONS[0].ATK1.name;
+      docel('op2').innerHTML = WEAPONS[0].ATK2.name;
+      docel('op3').innerHTML = WEAPONS[0].ATK3.name;
+      docel('op4').innerHTML = WEAPONS[0].ATK4.name;
+      }
+      function wpn2(){
+      docel('atkOPTIONS').style.display = "none";
+      docel('atkOPTIONS2').style.display = "block";
+      docel('op1').innerHTML = WEAPONS[2].ATK1.name;
+      docel('op2').innerHTML = WEAPONS[2].ATK2.name;
+      docel('op3').innerHTML = WEAPONS[2].ATK3.name;
+      docel('op4').innerHTML = WEAPONS[2].ATK4.name;
+      }
       //END OF BATTLE FUNCTIONS
     </script>
   </body>
