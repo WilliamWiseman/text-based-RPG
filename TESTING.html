@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html>
-<body>
-<style>
-body{
-text-align:center;
-background-color:lightgreen;
-}
-</style>
-<div id="add" style="text-align:left"></div>
 
-<script>
-let grid = [];
-let xAxis = 0;
-let yAxis = 0;
-for(;;){
-let miniDiv = document.createElement('div');
-miniDiv.style="display:inline-block";
-this.arr = [];
-miniDiv.style = "display:inline-block";
-let tile = document.createElement('div')
-tile.style = "height:20px;width:20px;background:white";
-this.arr.push(tile);
-grid.push(this.arr);
-miniDiv.appendChild(tile);
-document.getElementById('add').appendChild(miniDiv);
-i++;
-if(i == 6){
-break;
-}
-}
-</script>
+<body>
+    <style>
+        body {
+            text-align: center;
+            background-color: lightgreen;
+        }
+    </style>
+    <div id="add" style="text-align:left"></div>
+
+    <script>
+        let grid = [];
+        let xAxis = 0;
+        let yAxis = 0;
+        for (; ;) {
+            let miniDiv = document.createElement('div');
+            miniDiv.style = "display:inline-block";
+            this.arr = [];
+            miniDiv.style = "display:inline-block";
+            let tile = document.createElement('div')
+            tile.style = "height:20px;width:20px;background:white";
+            this.arr.push(tile);
+            grid.push(this.arr);
+            miniDiv.appendChild(tile);
+            document.getElementById('add').appendChild(miniDiv);
+            i++;
+            if (i == 6) {
+                break;
+            }
+        }
+    </script>
 </body>
+
 </html>
