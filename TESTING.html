@@ -18,13 +18,13 @@
             let miniDiv = document.createElement('div');
             miniDiv.style = "display:inline-block";
             this.arr = [];
-            miniDiv.style = "display:inline-block";
+            miniDiv.style = "display:inline-block"; // line 19?
             let tile = document.createElement('div')
-            tile.style = "height:20px;width:20px;background:white";
+            tile.style = "height:20px;width:20px;background:white"; //better as an external css declaration, DRY
             this.arr.push(tile);
-            grid.push(this.arr);
+            grid.push(this.arr); // why?
             miniDiv.appendChild(tile);
-            document.getElementById('add').appendChild(miniDiv);
+            document.getElementById('add').appendChild(miniDiv); // infinite dom transversal!!!
             i++;
             if (i == 6) {
                 break;
