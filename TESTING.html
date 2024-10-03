@@ -9,28 +9,81 @@
         }
     </style>
     <div id="add" style="text-align:left"></div>
-
-    <script>
-        let grid = [];
-        let xAxis = 0;
-        let yAxis = 0;
-        for (; ;) {
-            let miniDiv = document.createElement('div');
-            miniDiv.style = "display:inline-block";
-            this.arr = [];
-            miniDiv.style = "display:inline-block"; // line 19?
-            let tile = document.createElement('div')
-            tile.style = "height:20px;width:20px;background:white"; //better as an external css declaration, DRY
-            this.arr.push(tile);
-            grid.push(this.arr); // why?
-            miniDiv.appendChild(tile);
-            document.getElementById('add').appendChild(miniDiv); // infinite dom transversal!!!
-            i++;
-            if (i == 6) {
-                break;
-            }
-        }
-    </script>
+    <button onclick="left()">left</button><button onclick="up()">up</button><button onclick="down()">down</button><button onclick="right()">right</button>
+<script>
+let grid = [];
+let xAxis = 0;
+let yAxis = 0;
+function createWorld(){
+for(let z = 0; z < 29; z++){
+let newYarr = [];
+let miniDiv = document.createElement('div');
+miniDiv.style = "display:inline-block"
+for(let i = 0; i < 12; i++){
+let tile = document.createElement('div');
+tile.style="height:20px;width:20px;background:white;border:1px solid black;";
+if(i == 0 && z == 0){
+tile.style.background = "red";
+}
+this.newObj = {};
+this.newObj.block = tile;
+this.newObj.collision = "none";
+newYarr.push(this.newObj);
+miniDiv.appendChild(tile);
+}
+grid.push(newYarr);
+document.getElementById('add').appendChild(miniDiv);
+}
+}
+createWorld();
+function right(){
+let num = grid.length - 1;
+if(xAxis < num){
+grid[xAxis][yAxis].block.style.background = "white";
+xAxis++;
+grid[xAxis][yAxis].block.style.background = "red";
+}
+}
+function left(){
+if(xAxis !== 0){
+grid[xAxis][yAxis].block.style.background = "white";
+xAxis--;
+grid[xAxis][yAxis].block.style.background = "red";
+}
+}
+function up(){
+if(yAxis !== 0){
+grid[xAxis][yAxis].block.style.background = "white";
+yAxis--;
+grid[xAxis][yAxis].block.style.background = "red";
+}
+}
+function down(){
+let num = grid[xAxis].length - 1;
+if(yAxis !== num){
+grid[xAxis][yAxis].block.style.background = "white";
+yAxis++;
+grid[xAxis][yAxis].block.style.background = "red";
+}
+}
+document.addEventListener("keydown", function(event) {
+  event.preventDefault();
+  const key = event.key;
+  switch (key) {
+    case "ArrowLeft":
+      left();
+      break;
+    case "ArrowRight":
+	  right();
+      break;
+    case "ArrowUp":
+      up();
+      break;
+    case "ArrowDown":
+      down();
+      break;
+  }
+});
+</script>
 </body>
-
 </html>
