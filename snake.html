@@ -1,1 +1,156 @@
+<!DOCTYPE html>
+<html>
 
+<body>
+    <style>
+        body {
+            text-align: center;
+            background-color: lightblue;
+        }
+    </style>
+    <div id="add" style="text-align:center;
+    height:440px;width:440px;border:5px solid gray"></div>
+    <br>
+    <button onclick="left()">left</button>
+    
+    <button onclick="up()">up</button>
+    
+    <button onclick="down()">down</button>
+    
+    <button onclick="right()">right</button>
+    
+<script>
+let grid = [];
+let xAxis = 3;
+let yAxis = 6;
+let snake = [];
+let initial = false;
+function createWorld(){
+let random = Math.floor(Math.random() * 11);
+for(let z = 0; z < 20; z++){
+let newYarr = [];
+let miniDiv = document.createElement('div');
+miniDiv.style = "display:inline-block"
+for(let i = 0; i < 20; i++){
+let tile = document.createElement('div');
+tile.style="height:20px;width:20px;background:black;border:1px solid gray;";
+if(i == 6 && z == 3){
+tile.style.background = "lime";
+initial = true;
+}
+this.newObj = {};
+this.newObj.block = tile;
+this.newObj.collision = "none";
+if(initial == true){
+this.newObj.collision = "brick";
+snake.push(this.newObj);
+initial = false;
+}
+if(i == 6 && z == 10){
+this.newObj.collision = "apple";
+tile.style.background = "red";
+}
+newYarr.push(this.newObj);
+miniDiv.appendChild(tile);
+}
+grid.push(newYarr);
+document.getElementById('add').appendChild(miniDiv);
+}
+}
+createWorld();
+function right(){
+let num = grid.length - 1;
+if(xAxis < num){
+xAxis++;
+clsnCheck('right');
+}
+}
+function left(){
+if(xAxis !== 0){
+xAxis--;
+clsnCheck('left');
+}
+}
+function up(){
+if(yAxis !== 0){
+yAxis--;
+clsnCheck('up');
+}
+}
+function down(){
+let num = grid[xAxis].length - 1;
+if(yAxis !== num){
+yAxis++;
+clsnCheck('down');
+}
+}
+document.addEventListener("keydown", function(event) {
+  event.preventDefault();
+  const key = event.key;
+  switch (key) {
+    case "ArrowLeft":
+      left();
+      break;
+    case "ArrowRight":
+	  right();
+      break;
+    case "ArrowUp":
+      up();
+      break;
+    case "ArrowDown":
+      down();
+      break;
+  }
+});
+let z = 0;
+let num1;
+let num2;
+function clsnCheck(direction){
+let apple = false;
+if(grid[xAxis][yAxis].collision == 'apple'){
+apple = true;
+}
+if(grid[xAxis][yAxis].collision == 'brick'){
+if(direction == 'up'){
+yAxis++;
+return;
+}else if(direction == 'left'){
+xAxis++;
+return;
+}else if(direction == 'right'){
+xAxis--;
+}else if(direction == 'down'){
+yAxis--;
+return;
+}
+}
+snake.push(grid[xAxis][yAxis]);
+if(z < 3){
+grid[xAxis][yAxis].block.style.background = "lime";
+grid[xAxis][yAxis].collision = "brick";
+z++;
+return;
+}
+snake[0].collision = "none";
+snake[0].block.style.background = "black";
+if(apple == false){
+snake.shift();
+}
+if(apple == true){
+while(true){
+num1 = Math.floor(Math.random() * 20);
+num2 = Math.floor(Math.random() * 20);
+if(grid[num1][num2].collision = 'none'){
+grid[num1][num2].collision = 'apple';
+grid[num1][num2].block.style.background = "red";
+break;
+}
+}
+apple = false;
+}
+grid[xAxis][yAxis].block.style.background = "lime";
+grid[xAxis][yAxis].collision = "brick";
+}
+</script>
+</body>
+</html>
