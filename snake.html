@@ -8,6 +8,11 @@
             background-color: lightblue;
         }
     </style>
+    <div id="start">
+    <h1>WORM</h1>
+    <button onclick="start()">Begin</button>
+    </div>
+    <div id="game" style="display:none">
     <div id="add" style="text-align:center;
     height:440px;width:440px;border:5px solid gray"></div>
     <br>
@@ -18,13 +23,19 @@
     <button onclick="down()">down</button>
     
     <button onclick="right()">right</button>
-    
+    </div>
+    <div id="end" style="display:none">
+    <h1>YOU LOSE</h1>
+    <p>Points: <span id="pointDisp">0</span></p>
+    </div>
 <script>
 let grid = [];
 let xAxis = 3;
 let yAxis = 6;
 let snake = [];
+let points = 0;
 let initial = false;
+let DIRECTION = 'right';
 function createWorld(){
 let random = Math.floor(Math.random() * 11);
 for(let z = 0; z < 20; z++){
@@ -57,24 +68,29 @@ grid.push(newYarr);
 document.getElementById('add').appendChild(miniDiv);
 }
 }
-createWorld();
 function right(){
 let num = grid.length - 1;
 if(xAxis < num){
 xAxis++;
 clsnCheck('right');
+}else{
+lose();
 }
 }
 function left(){
 if(xAxis !== 0){
 xAxis--;
 clsnCheck('left');
+}else{
+lose();
 }
 }
 function up(){
 if(yAxis !== 0){
 yAxis--;
 clsnCheck('up');
+}else{
+lose();
 }
 }
 function down(){
@@ -82,6 +98,8 @@ let num = grid[xAxis].length - 1;
 if(yAxis !== num){
 yAxis++;
 clsnCheck('down');
+}else{
+lose();
 }
 }
 document.addEventListener("keydown", function(event) {
@@ -90,40 +108,49 @@ document.addEventListener("keydown", function(event) {
   switch (key) {
     case "ArrowLeft":
       left();
+      DIRECTION = 'left';
       break;
     case "ArrowRight":
 	  right();
+      DIRECTION = 'right';
       break;
     case "ArrowUp":
       up();
+      DIRECTION = 'up';
       break;
     case "ArrowDown":
       down();
+      DIRECTION = 'down';
       break;
   }
 });
 let z = 0;
 let num1;
 let num2;
+function momentum(){
+if(DIRECTION == 'up'){
+up();
+return;
+}else if(DIRECTION == 'left'){
+left();
+return;
+}else if(DIRECTION == 'right'){
+right();
+return;
+}else if(DIRECTION == 'down'){
+down();
+return;
+}
+}
 function clsnCheck(direction){
 let apple = false;
 if(grid[xAxis][yAxis].collision == 'apple'){
 apple = true;
+points++;
 }
 if(grid[xAxis][yAxis].collision == 'brick'){
-if(direction == 'up'){
-yAxis++;
+lose();
 return;
-}else if(direction == 'left'){
-xAxis++;
-return;
-}else if(direction == 'right'){
-xAxis--;
-return;
-}else if(direction == 'down'){
-yAxis--;
-return;
-}
 }
 snake.push(grid[xAxis][yAxis]);
 if(z < 3){
@@ -132,8 +159,10 @@ grid[xAxis][yAxis].collision = "brick";
 z++;
 return;
 }
+if(snake[0].collision !== 'apple'){
 snake[0].collision = "none";
 snake[0].block.style.background = "black";
+}
 if(apple == false){
 snake.shift();
 }
@@ -151,6 +180,18 @@ apple = false;
 }
 grid[xAxis][yAxis].block.style.background = "lime";
 grid[xAxis][yAxis].collision = "brick";
+}
+function lose(){
+document.getElementById('game').style.display = "none";
+document.getElementById('end').style.display = "block";
+document.getElementById('pointDisp').innerText = points;
+clearInterval(go);
+}
+function start(){
+document.getElementById('start').style.display = "none";
+document.getElementById('game').style.display = "block";
+createWorld();
+let go = setInterval(momentum, 250);
 }
 </script>
 </body>
