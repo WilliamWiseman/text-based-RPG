@@ -7,9 +7,12 @@
     <style>
       body {
         text-align: center;
+        background-color:white
       }
       fieldset {
         text-align: left;
+        margin-left:auto;
+        margin-right:auto;
       }
     </style>
 
@@ -54,7 +57,7 @@
           max="40"
           style="background-color: green"
         ></progress>
-        <p>HP 40/40</p>
+        <p>HP <span id="enHP">40</span>/40</p>
       </div>
       <br /><br /><br /><br /><br /><br /><br /><br /><br />
       <div style="text-align: right">
@@ -67,7 +70,7 @@
         ></progress>
         <p>HP: 100/100</p>
       </div>
-      <div id="mainOPTIONS">
+      <div id="mainOPTIONS" style="margin-left:auto;margin-right:auto">
         <fieldset style="width: 620px; height:122px">
           <legend>Actions</legend>
           <button style="width: 203px; height: 100px" onclick="nofziger()">
@@ -77,7 +80,7 @@
           <button style="width: 203px; height: 100px">OTHER</button>
         </fieldset>
       </div>
-      <div id="atkOPTIONS" style="display: none">
+      <div id="atkOPTIONS" style="display: none;margin-left:auto;margin-right:auto">
         <fieldset style="width: 620px; height:122px">
           <legend>Weapons</legend>
           <button style="width: 203px; height: 100px" id="prim" onclick="wpn1()">PRIMARY</button>
@@ -87,13 +90,19 @@
           <button style="width: 203px; height: 100px">BACK</button>
         </fieldset>
       </div>
-      <div id="atkOPTIONS2" style="display: none">
+      <div id="atkOPTIONS2" style="display: none;margin-left:auto;margin-right:auto">
         <fieldset style="width: 620px; height:122px">
           <legend>Moves</legend>
-          <button style="width: 308px; height: 50px" id="op1">ATK1</button>
-          <button style="width: 308px; height: 50px" id="op2">ATK2</button>
-          <button style="width: 308px; height: 50px" id="op3">ATK3</button>
-          <button style="width: 308px; height: 50px" id="op4">ATK4</button>
+          <button style="width: 308px; height: 50px" id="op1" onclick="ATTACK(0)">ATK1</button>
+          <button style="width: 308px; height: 50px" id="op2" onclick="ATTACK(1)">ATK2</button>
+          <button style="width: 308px; height: 50px" id="op3" onclick="ATTACK(2)">ATK3</button>
+          <button style="width: 308px; height: 50px" id="op4" onclick="ATTACK(3)">ATK4</button>
+        </fieldset>
+      </div>
+      <div id="BattleText" style="display: none;margin-left:auto;margin-right:auto">
+        <fieldset style="width: 620px; height:122px">
+          <p id="text">ERROR: No text found</p>
+          <button style="text-align:right" onclick="enemyATTACK()">Next</button>
         </fieldset>
       </div>
     </div>
@@ -252,7 +261,10 @@
       let enemyHp = enemy.hp;
       const ENEMYHP = document.getElementById("enemyHpBar");
       const FIGHT = document.getElementById("fightScreen");
-
+      let a = 0;
+      let b = 2;
+      let c = 0;
+      let D = 0;
       //END OF BATTLE OBJECTS
 
       //BATTLE HTML FUNCTIONS
@@ -262,8 +274,8 @@
       }
 
       function initialBattleHtml() {
-        docel("prim").innerHTML = WEAPONS[0].name;
-        docel("sec").innerHTML = WEAPONS[2].name;
+        docel("prim").innerHTML = WEAPONS[a].name;
+        docel("sec").innerHTML = WEAPONS[b].name;
       }
       
       function nofziger() {
@@ -284,21 +296,47 @@
       //END OF BATTLE HTML FUNCTIONS
 
       //BATTLE FUNCTIONS
+      let moveArr = [];
       function wpn1(){
       docel('atkOPTIONS').style.display = "none";
       docel('atkOPTIONS2').style.display = "block";
-      docel('op1').innerHTML = WEAPONS[0].ATK1.name;
-      docel('op2').innerHTML = WEAPONS[0].ATK2.name;
-      docel('op3').innerHTML = WEAPONS[0].ATK3.name;
-      docel('op4').innerHTML = WEAPONS[0].ATK4.name;
+      docel('op1').innerHTML = WEAPONS[a].ATK1.name;
+      docel('op2').innerHTML = WEAPONS[a].ATK2.name;
+      docel('op3').innerHTML = WEAPONS[a].ATK3.name;
+      docel('op4').innerHTML = WEAPONS[a].ATK4.name;
+      moveArr.push(WEAPONS[a].ATK1);
+      moveArr.push(WEAPONS[a].ATK2);
+      moveArr.push(WEAPONS[a].ATK3);
+      moveArr.push(WEAPONS[a].ATK4);
+      c = a;
       }
       function wpn2(){
       docel('atkOPTIONS').style.display = "none";
       docel('atkOPTIONS2').style.display = "block";
-      docel('op1').innerHTML = WEAPONS[2].ATK1.name;
-      docel('op2').innerHTML = WEAPONS[2].ATK2.name;
-      docel('op3').innerHTML = WEAPONS[2].ATK3.name;
-      docel('op4').innerHTML = WEAPONS[2].ATK4.name;
+      docel('op1').innerHTML = WEAPONS[b].ATK1.name;
+      docel('op2').innerHTML = WEAPONS[b].ATK2.name;
+      docel('op3').innerHTML = WEAPONS[b].ATK3.name;
+      docel('op4').innerHTML = WEAPONS[b].ATK4.name;
+      moveArr.push(WEAPONS[b].ATK1);
+      moveArr.push(WEAPONS[b].ATK2);
+      moveArr.push(WEAPONS[b].ATK3);
+      moveArr.push(WEAPONS[b].ATK4);
+      c = b;
+      }
+      function ATTACK(move){
+      if(moveArr[move].name !== "NONE"){
+      docel('atkOPTIONS2').style.display = "none";
+      docel('BattleText').style.display = "block";
+      let damage = moveArr[move].damage + WEAPONS[c].BaseDamage;
+      docel('text').innerText = "Player used " + moveArr[move].name + "; It did " + damage + " damage";
+      enemyHp -= damage;
+      docel('enemyHpBar').value -= damage;
+      docel('enHP').innerText = docel('enemyHpBar').value;
+      }
+      }
+      function enemyATTACK(){
+      docel('text').innerText = ENEMIES[D].name + " used Attack";
+      
       }
       //END OF BATTLE FUNCTIONS
     </script>
