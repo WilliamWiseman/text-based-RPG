@@ -5,7 +5,7 @@ Coded by William Wiseman and Collaborators.
 (Bug fixes and white space)
 
 
-COLLABORATORS: Matt Wiseman
+COLLABORATORS: Matt Wiseman, Miranda Stuckey
 
 
 Explore the exciting land of Namia! (nay-mee-uh)
